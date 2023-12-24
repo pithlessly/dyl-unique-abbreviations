@@ -40,4 +40,14 @@ def abbrev_candidates(w):
         opts = sorted({o for opt in opts for o in deletions(opt) if not is_redundant(o)})
     return last
 
-print(abbrev_candidates("candidates"))
+import sys
+w = sys.argv[1]
+if len(sys.argv) > 2:
+    to_remove = sys.argv[2].split(",")
+    words = set(words)
+    for word in to_remove:
+        assert word in words, "{} is not present anyway".format(word)
+        words.remove(word)
+assert w in words, "{} is not in the dictionary".format(w)
+if is_redundant(w): print("not unique:", redundant_cache[w][1])
+else: print(abbrev_candidates(w))
